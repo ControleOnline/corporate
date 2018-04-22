@@ -11,4 +11,9 @@ class DefaultController extends \Core\Controller\CompanyController {
         
     }
 
+    public function conferenceAction() {
+        echo 'teste';
+        exit;
+    }
+
 }
