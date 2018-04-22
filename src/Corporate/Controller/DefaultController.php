@@ -18,7 +18,7 @@ class DefaultController extends \Core\Controller\CompanyController {
         $companymodel->initialize($this->serviceLocator);
         $cnpj = $companymodel->getLoggedPeopleCompany()->getDocument()[0]->getDocument();
 
-        $data = Api::nvGet('SociosTk', array(
+        $data = Api::nvGet('SociosTK', array(
                     'documento' => $cnpj
         ));
 
