@@ -68,8 +68,7 @@ class DefaultController extends \Core\Controller\CompanyController {
     public function createProcurationAction() {
         if (ErrorModel::getErrors()) {
             return $this->_view;
-        }
-        $this->_view->forceNotLoggedInLayout = true;
+        }        
         if (!$this->_userModel->loggedIn()) {
             return \Core\Helper\View::redirectToLogin($this->_renderer, $this->getResponse(), $this->getRequest(), $this->redirect());
         } else {
@@ -81,8 +80,7 @@ class DefaultController extends \Core\Controller\CompanyController {
     public function conferenceBusinessPartnerAction() {
         if (ErrorModel::getErrors()) {
             return $this->_view;
-        }
-        $this->_view->forceNotLoggedInLayout = true;
+        }        
         if (!$this->_userModel->loggedIn()) {
             return \Core\Helper\View::redirectToLogin($this->_renderer, $this->getResponse(), $this->getRequest(), $this->redirect());
         } else {
@@ -94,8 +92,7 @@ class DefaultController extends \Core\Controller\CompanyController {
     public function conferenceAddressAction() {
         if (ErrorModel::getErrors()) {
             return $this->_view;
-        }
-        $this->_view->forceNotLoggedInLayout = true;
+        }        
         if (!$this->_userModel->loggedIn()) {
             return \Core\Helper\View::redirectToLogin($this->_renderer, $this->getResponse(), $this->getRequest(), $this->redirect());
         } else {
