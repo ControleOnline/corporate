@@ -47,18 +47,18 @@ class DefaultController extends \Core\Controller\CompanyController {
                         /*
                          * Existem outros socios
                          */
-                        return $this->redirectTo($this->_renderer, $this->getResponse(), $this->redirect(), '/corporate/conference-business-partner');
+                        return $this->redirectTo('/corporate/conference-business-partner');
                     } else {
                         /*
                          * Verificar endereço
                          */
-                        return $this->redirectTo($this->_renderer, $this->getResponse(), $this->redirect(), '/corporate/conference-address');
+                        return $this->redirectTo('/corporate/conference-address');
                     }
                 } else {
                     /*
                      * Procuração
                      */
-                    return $this->redirectTo($this->_renderer, $this->getResponse(), $this->redirect(), '/corporate/create-procuration');
+                    return $this->redirectTo('/corporate/create-procuration');
                 }
             }
             exit;
@@ -104,9 +104,12 @@ class DefaultController extends \Core\Controller\CompanyController {
         }
     }
 
-    public function redirectTo($renderer, $response, $redirect, $url) {
-        $redirect->toUrl($renderer->basePath($url));
-        $response->sendHeaders();
+    public function redirectTo($url) {
+        echo $url;
+        exit;
+
+        $this->redirect()->toUrl($this->_renderer->basePath($url));
+        $this->getResponse()->sendHeaders();
         exit;
     }
 
