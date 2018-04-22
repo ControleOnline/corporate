@@ -47,18 +47,18 @@ class DefaultController extends \Core\Controller\CompanyController {
                         /*
                          * Existem outros socios
                          */
-                        return $this->redirectToLogin($this->_renderer, $this->getResponse(), $this->redirect(), '/corporate/conference-business-partner');
+                        return $this->redirectTo($this->_renderer, $this->getResponse(), $this->redirect(), '/corporate/conference-business-partner');
                     } else {
                         /*
                          * Verificar endereço
                          */
-                        return $this->redirectToLogin($this->_renderer, $this->getResponse(), $this->redirect(), '/corporate/conference-address');
+                        return $this->redirectTo($this->_renderer, $this->getResponse(), $this->redirect(), '/corporate/conference-address');
                     }
                 } else {
                     /*
                      * Procuração
                      */
-                    return $this->redirectToLogin($this->_renderer, $this->getResponse(), $this->redirect(), '/corporate/create-procuration');
+                    return $this->redirectTo($this->_renderer, $this->getResponse(), $this->redirect(), '/corporate/create-procuration');
                 }
             }
             exit;
