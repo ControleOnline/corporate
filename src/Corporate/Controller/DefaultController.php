@@ -18,7 +18,7 @@ class DefaultController extends \Core\Controller\CompanyController {
         if (ErrorModel::getErrors()) {
             return $this->_view;
         }
-        $this->_view->setVariable('forceNotLoggedInLayout', true);
+        $this->_view->setVariables(array('forceNotLoggedInLayout' => true));
         if (!$this->_userModel->loggedIn()) {
             return \Core\Helper\View::redirectToLogin($this->_renderer, $this->getResponse(), $this->getRequest(), $this->redirect());
         } else {
@@ -69,11 +69,11 @@ class DefaultController extends \Core\Controller\CompanyController {
         if (ErrorModel::getErrors()) {
             return $this->_view;
         }
-        $this->_view->setVariable('forceNotLoggedInLayout', true);
+        $this->_view->setVariables(array('forceNotLoggedInLayout' => true));
         if (!$this->_userModel->loggedIn()) {
             return \Core\Helper\View::redirectToLogin($this->_renderer, $this->getResponse(), $this->getRequest(), $this->redirect());
         } else {
-            $this->_view->setVariable('forceNotLoggedInLayout', true);
+            $this->_view->setVariables(array('forceNotLoggedInLayout' => true));
             return $this->_view;
         }
     }
@@ -82,11 +82,11 @@ class DefaultController extends \Core\Controller\CompanyController {
         if (ErrorModel::getErrors()) {
             return $this->_view;
         }
-        $this->_view->setVariable('forceNotLoggedInLayout', true);
+        $this->_view->setVariables(array('forceNotLoggedInLayout' => true));
         if (!$this->_userModel->loggedIn()) {
             return \Core\Helper\View::redirectToLogin($this->_renderer, $this->getResponse(), $this->getRequest(), $this->redirect());
         } else {
-            $this->_view->setVariable('forceNotLoggedInLayout', true);
+            $this->_view->setVariables(array('forceNotLoggedInLayout' => true));
             return $this->_view;
         }
     }
@@ -95,11 +95,11 @@ class DefaultController extends \Core\Controller\CompanyController {
         if (ErrorModel::getErrors()) {
             return $this->_view;
         }
-        $this->_view->setVariable('forceNotLoggedInLayout', true);
+        $this->_view->setVariables(array('forceNotLoggedInLayout' => true));
         if (!$this->_userModel->loggedIn()) {
             return \Core\Helper\View::redirectToLogin($this->_renderer, $this->getResponse(), $this->getRequest(), $this->redirect());
         } else {
-            $this->_view->setVariable('forceNotLoggedInLayout', true);
+            $this->_view->setVariables(array('forceNotLoggedInLayout' => true));
             return $this->_view;
         }
     }
