@@ -13,20 +13,28 @@ class DefaultController extends \Core\Controller\CompanyController {
         
     }
 
-    public function conferenceAction() {        
-        $companymodel = new \Company\Model\CompanyModel();
-        $companymodel->initialize($this->serviceLocator);
-        $cnpj = $companymodel->getLoggedPeopleCompany()->getDocument()[0]->getDocument();
+    public function conferenceAction() {
+        if (ErrorModel::getErrors()) {
+            return $this->_view;
+        }
+        if (!$this->_userModel->loggedIn()) {
+            return \Core\Helper\View::redirectToLogin($this->_renderer, $this->getResponse(), $this->getRequest(), $this->redirect());
+        } else {
 
-        $data = Api::nvGet('SociosTK', array(
-                    'documento' => $cnpj
-        ));
+            $companymodel = new \Company\Model\CompanyModel();
+            $companymodel->initialize($this->serviceLocator);
+            $cnpj = $companymodel->getLoggedPeopleCompany()->getDocument()[0]->getDocument();
 
-        echo '<pre>';
-        print_r($data);
-        echo '</pre>';
+            $data = Api::nvGet('SociosTK', array(
+                        'documento' => $cnpj
+            ));
 
-        exit;
+            echo '<pre>';
+            print_r($data);
+            echo '</pre>';
+
+            exit;
+        }
     }
 
 }
