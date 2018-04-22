@@ -13,7 +13,6 @@ namespace Corporate;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use User\Model\UserModel;
-use User\Model\UserModel;
 use Company\Model\CompanyModel;
 
 class Module {
