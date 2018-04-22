@@ -3,6 +3,7 @@
 namespace Corporate\Controller;
 
 use Core\Helper\Api;
+use Core\Model\ErrorModel;
 
 class DefaultController extends \Core\Controller\CompanyController {
     /*
