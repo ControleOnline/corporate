@@ -1,1 +1,37 @@
-Teste
+<div class="app-container app-login" data-need-login="true">    
+    <div class="flex-center">        
+        <div class="app-header"></div>
+        <div class="app-body">
+            <div class="app-block">                
+                <div class="app-form">                    
+                    <form id="create-company-form" class="form-horizontal" data-success-url="/company" action="/company/create-corporate-user-company.json" method="POST" data-svp-id="gmapsstreetviewpano-company" data-svm-id="gmapsstreetviewmap-company">
+                        <div class="row">
+                            <div class="form-suggestion">
+                                <?= $this->translate('Company Details'); ?>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon3">
+                                        <i class="fa fa-user" aria-hidden="true"></i></span>
+                                    <input id="document-number" data-mask="({mask: '99.999.999/9999-99','clearIncomplete': true})" name="document-number" data-cnpj-in-use="/user/user-in-use/username/" type="text" placeholder="<?= $this->translate('Enter document number of your Company') ?>" class="form-control input-md" required>
+                                </div>
+                            </div>
+                            <div class="text-center add-quote-address">            
+                                <input type="hidden" name="lat" data-lat="lat">
+                                <input type="hidden" name="lng" data-lng="lng">
+                                <button data-success-url="/company" data-save="/company/create-corporate-user-company.json" id="save" name="save" class="btn btn-success btn-submit"><?= $this->translate('Save') ?></button>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div id="gmapsstreetview" class="row">                        
+                                <span class="line-street-view pull-left"> </span>
+                                <div id="gmapsstreetviewpano-company" class="gmapsstreetviewpano col-xs-12 col-sm-12 col-md-6 col-lg-6"></div>
+                                <div id="gmapsstreetviewmap-company " class="gmapsstreetviewmap col-xs-12 col-sm-12 col-md-6 col-lg-6"></div>                        
+                            </div>  
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="app-footer">
+        </div>
+    </div>
+</div>
