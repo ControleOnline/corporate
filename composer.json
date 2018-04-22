@@ -1,0 +1,22 @@
+{
+    "name": "controleonline/corporate",
+    "description": "Controle Online - Corporate Module",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "Corporate"
+    ],
+    "autoload": {
+        "psr-4": {
+            "Corporate\\": "src/Corporate"
+        },
+        "classmap": [
+            "Module.php"
+        ]
+    },
+    "homepage": "https://github.com/ControleOnline/corporate",
+    "require": {
+        "controleonline/core": "*",
+        "controleonline/user": "*",
+        "controleonline/company": "*"
+    }    
+}
