@@ -13,9 +13,7 @@ class DefaultController extends \Core\Controller\CompanyController {
         
     }
 
-    public function conferenceAction() {
-        echo 'teste';
-
+    public function conferenceAction() {        
         $companymodel = new \Company\Model\CompanyModel();
         $companymodel->initialize($this->serviceLocator);
         $cnpj = $companymodel->getLoggedPeopleCompany()->getDocument()[0]->getDocument();
