@@ -105,9 +105,6 @@ class DefaultController extends \Core\Controller\CompanyController {
     }
 
     public function redirectTo($url) {
-        echo $url;
-        exit;
-
         $this->redirect()->toUrl($this->_renderer->basePath($url));
         $this->getResponse()->sendHeaders();
         exit;
