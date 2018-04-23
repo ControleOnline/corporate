@@ -1,26 +1,47 @@
-<div class="app-container app-login" data-need-login="true">    
-    <div class="flex-center">        
-        <div class="app-header"></div>
-        <div class="app-body">
-            <div class="app-block">                
-                <div class="app-form">                    
-                    <form id="create-company-form" class="form-horizontal" data-success-url="/company" action="/company/create-corporate-user-company.json" method="POST" data-svp-id="gmapsstreetviewpano-company" data-svm-id="gmapsstreetviewmap-company">
-                        <div class="row">
-                            <div class="form-suggestion">
-                                <?= $this->translate('Conference business partner'); ?>
-                            </div>                            
-                            <div class="form-suggestion">Vimos que existem outros sócios...</div>
-                            <div class="form-suggestion">Vocês assinam em conjunto?</div>
-                            <div class="input-group">
-                                <label class="radio-inline"><input type="radio" name="optradio">Sim</label>
-                                <label class="radio-inline"><input type="radio" name="optradio">Não, eu assino sozinho pela companhia</label>
-                            </div>
+<?= $this->doctype(); ?>
+<html lang="pt">
+    <head>
+        <meta charset="utf-8">
+        <?= $this->headTitle($this->translate('Application Name') . ' | ' . $this->translate('Application Slug'))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?= $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>           
+        <!-- Le styles -->                               
+        <?= $this->headStyle() ?>
+        <?=
+                $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath('/assets/img/favicon.ico')))
+                ->headLink(array('rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => $this->basePath('/assets/img/favicon.ico')));
+        ?>           
+        <!-- Scripts -->        
+        <?= $this->headScript() ?>        
+    </head>    
+    <body class="flat-blue" data-js-libs='<?= $this->requireJsLibs ? json_encode($this->requireJsLibs) : '{}' ?>' data-js-files='<?= $this->requireJsFiles ? json_encode($this->requireJsFiles) : '{}' ?>' style="<?= (!$this->userModel->loggedIn()) ? 'margin-top: 0px;' : '' ?>">        
+        <div class="app app-default">                  
+            <div class="app-container app-login" data-need-login="true">    
+                <div class="flex-center">        
+                    <div class="app-header"></div>
+                    <div class="app-body">
+                        <div class="app-block">                
+                            <div class="app-form">                    
+                                <form id="create-company-form" class="form-horizontal" data-success-url="/company" action="/company/create-corporate-user-company.json" method="POST" data-svp-id="gmapsstreetviewpano-company" data-svm-id="gmapsstreetviewmap-company">
+                                    <div class="row">
+                                        <div class="form-suggestion">
+                                            <?= $this->translate('Conference business partner'); ?>
+                                        </div>                            
+                                        <div class="form-suggestion">Vimos que existem outros sócios...</div>
+                                        <div class="form-suggestion">Vocês assinam em conjunto?</div>
+                                        <div class="input-group">
+                                            <label class="radio-inline"><input type="radio" name="optradio">Sim</label>
+                                            <label class="radio-inline"><input type="radio" name="optradio">Não, eu assino sozinho pela companhia</label>
+                                        </div>
 
-                    </form>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-footer">
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="app-footer">
-        </div>
-    </div>
-</div>
+        <?= $this->inlineScript() ?>                       
+    </body>
+</html>                                
