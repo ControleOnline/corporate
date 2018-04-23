@@ -45,7 +45,11 @@ class DefaultController extends \Core\Controller\CompanyController {
                      * Empresa com menos de 1 ano
                      */
                     return $this->redirectTo('/corporate/conference-fundation-date');
-                } elseif ($company['CADASTRAIS'] && $company['CADASTRAIS']['CNAE'] && in_array($company['CADASTRAIS']['CNAE'], array('0000'))) { //Preciso da lista de CNAEs que não poderão ser operados
+                } else
+                /*
+                 * @todo Preciso da lista de CNAEs que não poderão ser operados
+                 */
+                if ($company['CADASTRAIS'] && $company['CADASTRAIS']['CNAE'] && in_array($company['CADASTRAIS']['CNAE'], array('0000'))) {
                     /*
                      * CNAE em blacklist
                      */
