@@ -78,7 +78,7 @@ class DefaultController extends \Core\Controller\CompanyController {
                                         /*
                                          * Existem CNPJ´s de filiais
                                          */
-                                        return $this->redirectTo('/corporate/conference-filiais');
+                                        return $this->redirectTo('/corporate/conference-affiliateds');
                                     } else {
                                         if (1 === 'z') {
                                             /*
@@ -117,6 +117,30 @@ class DefaultController extends \Core\Controller\CompanyController {
             }
             exit;
         }
+    }
+    
+
+public function conferenceCnaeAction(){
+            $this->_view->setTerminal(true);
+        $this->_view->setVariable('forceNotLoggedInLayout', true);
+        return;
+}
+    public function conferenceAffiliatedsAction() {
+        $this->_view->setTerminal(true);
+        $this->_view->setVariable('forceNotLoggedInLayout', true);
+        return;
+    }
+
+    public function conferencePpeAction() {
+        $this->_view->setTerminal(true);
+        $this->_view->setVariable('forceNotLoggedInLayout', true);
+        return;
+    }
+
+    public function conferenceFundationDateAction() {
+        $this->_view->setTerminal(true);
+        $this->_view->setVariable('forceNotLoggedInLayout', true);
+        return;
     }
 
     public function createProcurationAction() {
