@@ -118,13 +118,13 @@ class DefaultController extends \Core\Controller\CompanyController {
             exit;
         }
     }
-    
 
-public function conferenceCnaeAction(){
-            $this->_view->setTerminal(true);
+    public function conferenceCnaeAction() {
+        $this->_view->setTerminal(true);
         $this->_view->setVariable('forceNotLoggedInLayout', true);
         return;
-}
+    }
+
     public function conferenceAffiliatedsAction() {
         $this->_view->setTerminal(true);
         $this->_view->setVariable('forceNotLoggedInLayout', true);
