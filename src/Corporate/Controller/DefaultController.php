@@ -22,7 +22,6 @@ class DefaultController extends \Core\Controller\CompanyController {
         if (!$this->_userModel->loggedIn()) {
             return \Core\Helper\View::redirectToLogin($this->_renderer, $this->getResponse(), $this->getRequest(), $this->redirect());
         } else {
-
             $companymodel = new \Company\Model\CompanyModel();
             $companymodel->initialize($this->serviceLocator);
             $cnpj = $companymodel->getLoggedPeopleCompany()->getDocument()[0]->getDocument();
@@ -36,16 +35,18 @@ class DefaultController extends \Core\Controller\CompanyController {
             /*
              * Verificar data de fundação
              */
-
             if ($company['CADASTRAIS'] && $company['CADASTRAIS']['DATA_ABERTURA']) {
                 $data_abertura = new \DateTime(implode('-', array_reverse(explode('/', $company['CADASTRAIS']['DATA_ABERTURA']))));
                 $hoje = new \DateTime(date('Y-m-d'));
                 $intervalo = $hoje->diff($data_abertura);
                 $intervalo->y;
                 if ($intervalo->y < 1) {
+                    /*
+                     * Empresa com menos de 1 ano
+                     */
                     return $this->redirectTo('/corporate/conference-fundation-date');
                 } else {
-                    if (1 === 'z') {
+                    if ($company['CADASTRAIS'] && $company['CADASTRAIS'] ['CNAE'] && in_array($company['CADASTRAIS'] ['CNAE'], array('0000'))) { //Preciso da lista de CNAEs que não poderão ser operados
                         /*
                          * CNAE em blacklist
                          */
@@ -101,9 +102,9 @@ class DefaultController extends \Core\Controller\CompanyController {
                                         }
                                     } else {
                                         /*
-                                         * A empresa foi aberta a menos de 1 ano
+                                         * Procuração
                                          */
-                                        return $this->redirectTo('/corporate/conference-fundation-date');
+                                        return $this->redirectTo('/corporate/create-procuration');
                                     }
                                 } else {
                                     /*
@@ -117,15 +118,19 @@ class DefaultController extends \Core\Controller\CompanyController {
                                  */
                                 return $this->redirectTo('/corporate/create-procuration');
                             }
-                        } else {
-                            echo '<pre>';
-                            print_r($data);
-                            echo '</pre>';
                         }
                     }
                 }
+            } else {
+                /*
+                 * Não encontramos nenhum dado na Nova Vida. O que fazer?
+                 */
+                echo 'Não encontramos nenhum dado na Nova Vida. O que fazer?';
+                echo '<pre>';
+                print_r($data);
+                echo '</pre>';
+                exit;
             }
-            exit;
         }
     }
 
