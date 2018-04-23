@@ -96,6 +96,9 @@ class DefaultController extends \Core\Controller\CompanyController {
                                 }
                             }
                         } else {
+                            /*
+                             * A empresa foi aberta a menos de 1 ano
+                             */
                             return $this->redirectTo('/corporate/conference-fundation-date');
                         }
                     } else {
