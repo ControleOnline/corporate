@@ -30,96 +30,109 @@ class DefaultController extends \Core\Controller\CompanyController {
             $data = Api::nvGet('SociosTK', array(
                         'documento' => $cnpj
             ));
+            $company = Api::nvGet('PessoasEmpresasTk', array(
+                        'documento' => $cnpj
+            ));
+            /*
+             * Verificar data de fundação
+             */
 
-            if ($data && $data['CPF']) {
-                $document = $this->_userModel->getLoggedUserPeople()->getDocument()[0]->getDocument();
-                foreach ($data['CPF'] AS $key => $cpf) {
-                    if ($document == $cpf) {
+            if ($company['CADASTRAIS'] && $company['CADASTRAIS']['DATA_ABERTURA']) {
+                $data_abertura = new \DateTime(implode('-', array_reverse(explode('/', $company['CADASTRAIS']['DATA_ABERTURA']))));
+                $hoje = new \DateTime(date('Y-m-d'));
+                $intervalo = $hoje->diff($data_abertura);
+                $intervalo->y;
+                if ($intervalo->y < 1) {
+                    return $this->redirectTo('/corporate/conference-fundation-date');
+                } else {
+                    if (1 === 'z') {
                         /*
-                         * É socio
+                         * CNAE em blacklist
                          */
-                        $is_business_partner = true;
-                        $_key = $key;
-                    } elseif ($data['CARGO_SOCIO'][$key] == 'SOCIO ADMINISTRADOR') {
-                        /*
-                         * Existe outro sócio que pode assinar
-                         */
-                        $have_business_partner = true;
-                    }
-                }
-                if ($is_business_partner) {
-                    if (count($data['CPF']) > 1 && $have_business_partner) {
-                        /*
-                         * Existem outros socios
-                         */
-                        return $this->redirectTo('/corporate/conference-business-partner');
-                    } elseif ($data['CARGO_SOCIO'][$_key] == 'SOCIO ADMINISTRADOR') {
-                        /*
-                         * Verificar data de fundação
-                         */
-                        $company = Api::nvGet('PessoasEmpresasTk', array(
-                                    'documento' => $cnpj
-                        ));
-                        if ($company['CADASTRAIS'] && $company['CADASTRAIS']['DATA_ABERTURA']) {
-                            $data_abertura = new \DateTime(implode('-', array_reverse(explode('/', $company['CADASTRAIS']['DATA_ABERTURA']))));
-                            $hoje = new \DateTime(date('Y-m-d'));
-                            $intervalo = $hoje->diff($data_abertura);
-                            $intervalo->y;
-                            if ($intervalo->y < 1) {
-                                return $this->redirectTo('/corporate/conference-fundation-date');
-                            } else {
-                                if (1 === 'z') {
-                                    /*
-                                     * Cliente publicamente exposto
-                                     */
-                                    return $this->redirectTo('/corporate/conference-ppe');
-                                } else {
-                                    if (1 === 'z') {
+                        return $this->redirectTo('/corporate/conference-cnae');
+                    } else {
+                        if (1 === 'z') {
+                            /*
+                             * Ações judiciais
+                             */
+                            return $this->redirectTo('/corporate/judicial-actions');
+                        } else {
+                            if ($data && $data['CPF']) {
+                                $document = $this->_userModel->getLoggedUserPeople()->getDocument()[0]->getDocument();
+                                foreach ($data['CPF'] AS $key => $cpf) {
+                                    if ($document == $cpf) {
                                         /*
-                                         * Existem CNPJ´s de filiais
+                                         * É socio
                                          */
-                                        return $this->redirectTo('/corporate/conference-affiliateds');
-                                    } else {
-                                        if (1 === 'z') {
-                                            /*
-                                             * CNAE em blacklist
-                                             */
-                                            return $this->redirectTo('/corporate/conference-cnae');
-                                        } else {
-                                            $company = $companymodel->getLoggedPeopleCompany();
-                                            $company->setEnabled(true);
-                                            $this->getEntityManager()->persist($company);
-                                            $this->getEntityManager()->flush($company);
-                                            return $this->redirectTo('/user/profile');
-                                        }
+                                        $is_business_partner = true;
+                                        $_key = $key;
+                                    } elseif ($data['CARGO_SOCIO'][$key] == 'SOCIO ADMINISTRADOR') {
+                                        /*
+                                         * Existe outro sócio que pode assinar
+                                         */
+                                        $have_business_partner = true;
                                     }
                                 }
+                                if ($is_business_partner) {
+                                    if (count($data['CPF']) > 1 && $have_business_partner) {
+                                        /*
+                                         * Existem outros socios
+                                         */
+                                        return $this->redirectTo('/corporate/conference-business-partner');
+                                    } elseif ($data['CARGO_SOCIO'][$_key] == 'SOCIO ADMINISTRADOR') {
+                                        if (1 === 'z') {
+                                            /*
+                                             * Cliente publicamente exposto
+                                             */
+                                            return $this->redirectTo('/corporate/conference-ppe');
+                                        } else {
+                                            if (1 === 'z') {
+                                                /*
+                                                 * Existem CNPJ´s de filiais
+                                                 */
+                                                return $this->redirectTo('/corporate/conference-affiliateds');
+                                            } else {
+                                                $company = $companymodel->getLoggedPeopleCompany();
+                                                $company->setEnabled(true);
+                                                $this->getEntityManager()->persist($company);
+                                                $this->getEntityManager()->flush($company);
+                                                return $this->redirectTo('/user/profile');
+                                            }
+                                        }
+                                    } else {
+                                        /*
+                                         * A empresa foi aberta a menos de 1 ano
+                                         */
+                                        return $this->redirectTo('/corporate/conference-fundation-date');
+                                    }
+                                } else {
+                                    /*
+                                     * Procuração
+                                     */
+                                    return $this->redirectTo('/corporate/create-procuration');
+                                }
+                            } else {
+                                /*
+                                 * Procuração
+                                 */
+                                return $this->redirectTo('/corporate/create-procuration');
                             }
                         } else {
-                            /*
-                             * A empresa foi aberta a menos de 1 ano
-                             */
-                            return $this->redirectTo('/corporate/conference-fundation-date');
+                            echo '<pre>';
+                            print_r($data);
+                            echo '</pre>';
                         }
-                    } else {
-                        /*
-                         * Procuração
-                         */
-                        return $this->redirectTo('/corporate/create-procuration');
                     }
-                } else {
-                    /*
-                     * Procuração
-                     */
-                    return $this->redirectTo('/corporate/create-procuration');
                 }
-            } else {
-                echo '<pre>';
-                print_r($data);
-                echo '</pre>';
             }
             exit;
         }
+    }
+
+    public function judicialActionsAction() {
+        $this->_view->setTerminal(true);
+        $this->_view->setVariable('forceNotLoggedInLayout', true);
+        return;
     }
 
     public function conferenceCnaeAction() {
