@@ -17,8 +17,7 @@ class DefaultController extends \Core\Controller\CompanyController {
     public function conferenceAction() {
         if (ErrorModel::getErrors()) {
             return $this->_view;
-        }
-        $this->layout('layout/not-logged-in.phtml');
+        }        
         $this->_view->setVariable('forceNotLoggedInLayout' , true);
         if (!$this->_userModel->loggedIn()) {
             return \Core\Helper\View::redirectToLogin($this->_renderer, $this->getResponse(), $this->getRequest(), $this->redirect());
@@ -72,8 +71,7 @@ class DefaultController extends \Core\Controller\CompanyController {
         }        
         if (!$this->_userModel->loggedIn()) {
             return \Core\Helper\View::redirectToLogin($this->_renderer, $this->getResponse(), $this->getRequest(), $this->redirect());
-        } else {
-            $this->layout('layout/not-logged-in.phtml');
+        } else {            
             $this->_view->setVariable('forceNotLoggedInLayout' , true);
             return $this->_view;
         }
@@ -85,8 +83,7 @@ class DefaultController extends \Core\Controller\CompanyController {
         }        
         if (!$this->_userModel->loggedIn()) {
             return \Core\Helper\View::redirectToLogin($this->_renderer, $this->getResponse(), $this->getRequest(), $this->redirect());
-        } else {
-            $this->layout('layout/not-logged-in.phtml');
+        } else {            
             $this->_view->setVariable('forceNotLoggedInLayout' , true);
             return $this->_view;
         }
@@ -98,8 +95,7 @@ class DefaultController extends \Core\Controller\CompanyController {
         }        
         if (!$this->_userModel->loggedIn()) {
             return \Core\Helper\View::redirectToLogin($this->_renderer, $this->getResponse(), $this->getRequest(), $this->redirect());
-        } else {
-            $this->layout('layout/not-logged-in.phtml');
+        } else {            
             $this->_view->setVariable('forceNotLoggedInLayout' , true);
             return $this->_view;
         }
