@@ -46,7 +46,7 @@ class DefaultController extends \Core\Controller\CompanyController {
                      */
                     return $this->redirectTo('/corporate/conference-fundation-date');
                 } else {
-                    if ($company['CADASTRAIS'] && $company['CADASTRAIS'] ['CNAE'] && in_array($company['CADASTRAIS'] ['CNAE'], array('0000'))) { //Preciso da lista de CNAEs que não poderão ser operados
+                    if ($company['CADASTRAIS'] && $company['CADASTRAIS']['CNAE'] && in_array($company['CADASTRAIS']['CNAE'], array('0000'))) { //Preciso da lista de CNAEs que não poderão ser operados
                         /*
                          * CNAE em blacklist
                          */
