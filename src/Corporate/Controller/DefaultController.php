@@ -35,7 +35,7 @@ class DefaultController extends \Core\Controller\CompanyController {
             /*
              * Verificar data de fundação
              */
-            if ($company['CADASTRAIS'] && $company['CADASTRAIS']['DATA_ABERTURA']) {
+            if ($company['CADASTRAIS'] && $company['CADASTRAIS']['DATA_ABERTURA'] && $company['CADASTRAIS']['CNAE'] && $data && $data['CPF']) {
                 $data_abertura = new \DateTime(implode('-', array_reverse(explode('/', $company['CADASTRAIS']['DATA_ABERTURA']))));
                 $hoje = new \DateTime(date('Y-m-d'));
                 $intervalo = $hoje->diff($data_abertura);
@@ -45,80 +45,84 @@ class DefaultController extends \Core\Controller\CompanyController {
                      * Empresa com menos de 1 ano
                      */
                     return $this->redirectTo('/corporate/conference-fundation-date');
+                } elseif ($company['CADASTRAIS'] && $company['CADASTRAIS']['CNAE'] && in_array($company['CADASTRAIS']['CNAE'], array('0000'))) { //Preciso da lista de CNAEs que não poderão ser operados
+                    /*
+                     * CNAE em blacklist
+                     */
+                    return $this->redirectTo('/corporate/conference-cnae');
+                } elseif (1 === 'z') {
+                    /*
+                     * Ações judiciais
+                     */
+                    return $this->redirectTo('/corporate/judicial-actions');
                 } else {
-                    if ($company['CADASTRAIS'] && $company['CADASTRAIS']['CNAE'] && in_array($company['CADASTRAIS']['CNAE'], array('0000'))) { //Preciso da lista de CNAEs que não poderão ser operados
-                        /*
-                         * CNAE em blacklist
-                         */
-                        return $this->redirectTo('/corporate/conference-cnae');
-                    } else {
-                        if (1 === 'z') {
+                    $document = $this->_userModel->getLoggedUserPeople()->getDocument()[0]->getDocument();
+                    foreach ($data['CPF'] AS $key => $cpf) {
+                        if ($document == $cpf) {
                             /*
-                             * Ações judiciais
+                             * É socio
                              */
-                            return $this->redirectTo('/corporate/judicial-actions');
-                        } else {
-                            if ($data && $data['CPF']) {
-                                $document = $this->_userModel->getLoggedUserPeople()->getDocument()[0]->getDocument();
-                                foreach ($data['CPF'] AS $key => $cpf) {
-                                    if ($document == $cpf) {
-                                        /*
-                                         * É socio
-                                         */
-                                        $is_business_partner = true;
-                                        $_key = $key;
-                                    } elseif ($data['CARGO_SOCIO'][$key] == 'SOCIO ADMINISTRADOR') {
-                                        /*
-                                         * Existe outro sócio que pode assinar
-                                         */
-                                        $have_business_partner = true;
-                                    }
-                                }
-                                if ($is_business_partner) {
-                                    if (count($data['CPF']) > 1 && $have_business_partner) {
-                                        /*
-                                         * Existem outros socios
-                                         */
-                                        return $this->redirectTo('/corporate/conference-business-partner');
-                                    } elseif ($data['CARGO_SOCIO'][$_key] == 'SOCIO ADMINISTRADOR') {
-                                        if (1 === 'z') {
-                                            /*
-                                             * Cliente publicamente exposto
-                                             */
-                                            return $this->redirectTo('/corporate/conference-ppe');
-                                        } else {
-                                            if (1 === 'z') {
-                                                /*
-                                                 * Existem CNPJ´s de filiais
-                                                 */
-                                                return $this->redirectTo('/corporate/conference-affiliateds');
-                                            } else {
-                                                $company = $companymodel->getLoggedPeopleCompany();
-                                                $company->setEnabled(true);
-                                                $this->getEntityManager()->persist($company);
-                                                $this->getEntityManager()->flush($company);
-                                                return $this->redirectTo('/user/profile');
-                                            }
-                                        }
-                                    } else {
-                                        /*
-                                         * Procuração
-                                         */
-                                        return $this->redirectTo('/corporate/create-procuration');
-                                    }
-                                } else {
-                                    /*
-                                     * Procuração
-                                     */
-                                    return $this->redirectTo('/corporate/create-procuration');
-                                }
-                            } else {
-                                /*
-                                 * Procuração
-                                 */
-                                return $this->redirectTo('/corporate/create-procuration');
-                            }
+                            $is_business_partner = true;
+                            $_key = $key;
+                        } elseif ($data['CARGO_SOCIO'][$key] == 'SOCIO ADMINISTRADOR') {
+                            /*
+                             * Existe outro sócio que pode assinar
+                             */
+                            $have_business_partner = true;
                         }
+                    }
+                    /*
+                     * @todo Verificar se já temos a procuração
+                     */
+                    if ($is_business_partner) {
+                        /*
+                         * @todo Verificar se já respondeu sobre a quantidade de socios
+                         */
+                        if (count($data['CPF']) > 1 && $have_business_partner) {
+                            /*
+                             * Existem outros socios
+                             */
+                            return $this->redirectTo('/corporate/conference-business-partner');
+                        } else
+                        /*
+                         * @todo Verificar se já temos a procuração
+                         */
+                        if ($data['CARGO_SOCIO'][$_key] == 'SOCIO ADMINISTRADOR') {
+                            /*
+                             * @todo Verificar também se já temos o formulário PPE preenchido
+                             */
+                            if (1 === 'z') {
+                                /*
+                                 * Cliente publicamente exposto
+                                 */
+                                return $this->redirectTo('/corporate/conference-ppe');
+                            } else
+                            /*
+                             * @todo Verificar se já respondeu essas perguntas
+                             */
+                            if (1 === 'z') {
+                                /*
+                                 * Existem CNPJ´s de filiais
+                                 */
+                                return $this->redirectTo('/corporate/conference-affiliateds');
+                            } else {
+                                $company = $companymodel->getLoggedPeopleCompany();
+                                $company->setEnabled(true);
+                                $this->getEntityManager()->persist($company);
+                                $this->getEntityManager()->flush($company);
+                                return $this->redirectTo('/user/profile');
+                            }
+                        } else {
+                            /*
+                             * Procuração
+                             */
+                            return $this->redirectTo('/corporate/create-procuration');
+                        }
+                    } else {
+                        /*
+                         * Procuração
+                         */
+                        return $this->redirectTo('/corporate/create-procuration');
                     }
                 }
             } else {
