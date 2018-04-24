@@ -33,28 +33,24 @@ class DefaultController extends \Core\Controller\CompanyController {
                         'documento' => $cnpj
             ));
 
-            /*
-             * 
 
-
-
-
-              echo '<pre>';
-              print_r($data);
-              echo '</pre>';
-              echo '<pre>';
-              print_r($company);
-              echo '</pre>';
-
-              $c = Api::nvGet('PessoasLigadasTK', array(
-              'documento' => '03449275000103'//$cnpj
-              ));
-
-              echo '<pre>';
-              print_r($c);
-              echo '</pre>';
-              die();
-             */
+            if ($this->params()->fromQuery('debug')) {
+                echo '<pre>';
+                print_r($data);
+                echo '</pre>';
+                echo '<pre>';
+                print_r($company);
+                echo '</pre>';
+                /*
+                  $c = Api::nvGet('PessoasLigadasTK', array(
+                  'documento' => '03449275000103'//$cnpj
+                  ));
+                  echo '<pre>';
+                  print_r($c);
+                  echo '</pre>';
+                 */
+                die();
+            }
 
             /*
              * Verificar data de fundação
