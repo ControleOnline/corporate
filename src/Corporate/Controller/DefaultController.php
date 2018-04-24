@@ -131,7 +131,7 @@ class DefaultController extends \Core\Controller\CompanyController {
                             /*
                              * @todo Verificar também se já temos o formulário PPE preenchido
                              */
-                            if (1 === 'z') {
+                            if (!$this->_session->conference_ppe) {
                                 /*
                                  * Cliente publicamente exposto
                                  */
@@ -195,9 +195,23 @@ class DefaultController extends \Core\Controller\CompanyController {
     }
 
     public function conferencePpeAction() {
-        $this->_view->setTerminal(true);
-        $this->_view->setVariable('forceNotLoggedInLayout', true);
-        return;
+        if (ErrorModel::getErrors()) {
+            return $this->_view;
+        }
+        $params = $this->params()->fromPost();
+        if (!$this->_userModel->loggedIn()) {
+            return \Core\Helper\View::redirectToLogin($this->_renderer, $this->getResponse(), $this->getRequest(), $this->redirect());
+        } else if ($params && $params['conference-ppe']) {
+            /*
+             * Criar formulario fake
+             */
+            $this->_session->conference_ppe = true;
+            return $this->redirectTo('/corporate/conference');
+        } else {
+            $this->_view->setTerminal(true);
+            $this->_view->setVariable('forceNotLoggedInLayout', true);
+            return $this->_view;
+        }
     }
 
     public function conferenceFundationDateAction() {
