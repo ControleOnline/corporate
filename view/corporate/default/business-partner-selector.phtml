@@ -1,0 +1,34 @@
+<?= $this->doctype(); ?>
+<html lang="pt">
+    <head>
+        <meta charset="utf-8">
+        <?= $this->headTitle($this->translate('Application Name') . ' | ' . $this->translate('Application Slug'))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?= $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>           
+        <!-- Le styles -->                               
+        <?= $this->headStyle() ?>
+        <?=
+                $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath('/assets/img/favicon.ico')))
+                ->headLink(array('rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => $this->basePath('/assets/img/favicon.ico')));
+        ?>           
+        <!-- Scripts -->        
+        <?= $this->headScript() ?>        
+    </head>    
+    <body class="flat-blue" data-js-libs='<?= $this->requireJsLibs ? json_encode($this->requireJsLibs) : '{}' ?>' data-js-files='<?= $this->requireJsFiles ? json_encode($this->requireJsFiles) : '{}' ?>' style="<?= (!$this->userModel->loggedIn()) ? 'margin-top: 0px;' : '' ?>">        
+        <div class="app app-default">                  
+            <div class="app-container app-login" data-need-login="true">    
+                <div class="flex-center">        
+                    <div class="app-header"></div>
+                    <div class="app-body">
+                        <div class="app-block">                
+                            <div class="app-form">
+                                Selecionar quem mais irá assinar em nome da empresa
+                            </div>
+                        </div>
+                        <div class="app-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?= $this->inlineScript() ?>                       
+    </body>
+</html>                                

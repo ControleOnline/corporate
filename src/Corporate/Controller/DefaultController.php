@@ -5,8 +5,20 @@ namespace Corporate\Controller;
 use Core\Helper\Api;
 use Core\Model\ErrorModel;
 use Corporate\Model\CorporateModel;
+use Zend\Session\Container;
 
 class DefaultController extends \Core\Controller\CompanyController {
+
+    /**
+     * @var \Zend\Session\Container
+     */
+    protected $_session;
+
+    public function __construct() {
+        $this->_session = new Container('corporate');
+        parent::__construct();
+    }
+
     /*
      * @todo Arrumar essa permissão
      */
@@ -111,7 +123,7 @@ class DefaultController extends \Core\Controller\CompanyController {
                         /*
                          * @todo Verificar se já respondeu sobre a quantidade de socios
                          */
-                        if (count($data['CPF']) > 1 && $have_business_partner && $is_business_partner && $data['CARGO_SOCIO'][$_key] == 'SOCIO ADMINISTRADOR') {
+                        if (!$this->_session->conference_business_partner && count($data['CPF']) > 1 && $have_business_partner && $is_business_partner && $data['CARGO_SOCIO'][$_key] == 'SOCIO ADMINISTRADOR') {
                             /*
                              * Existem outros socios
                              */
@@ -212,12 +224,30 @@ class DefaultController extends \Core\Controller\CompanyController {
         }
     }
 
+    public function businessPartnerSelectorAction() {
+        $this->_view->setTerminal(true);
+        $this->_view->setVariable('forceNotLoggedInLayout', true);
+        return $this->_view;
+    }
+
     public function conferenceBusinessPartnerAction() {
         if (ErrorModel::getErrors()) {
             return $this->_view;
         }
+        $params = $this->params()->fromPost();
         if (!$this->_userModel->loggedIn()) {
             return \Core\Helper\View::redirectToLogin($this->_renderer, $this->getResponse(), $this->getRequest(), $this->redirect());
+        } else if ($params && $params['alone']) {
+            /*
+             * Assina sozinho
+             */
+            $this->_session->conference_business_partner = true;
+            return $this->redirectTo('/corporate/conference');
+        } elseif (isset($params['alone'])) {
+            /*
+             * Assina em conjunto
+             */
+            return $this->redirectTo('/corporate/business-partner-selector');
         } else {
             $this->_view->setTerminal(true);
             $this->_view->setVariable('forceNotLoggedInLayout', true);

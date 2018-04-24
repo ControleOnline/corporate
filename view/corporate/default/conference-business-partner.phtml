@@ -29,8 +29,11 @@
                                         <div class="form-suggestion">Vimos que existem outros sócios...</div>
                                         <div class="form-suggestion">Vocês assinam em conjunto?</div>
                                         <div class="input-group">
-                                            <label class="radio-inline"><input type="radio" name="optradio">Sim</label>
-                                            <label class="radio-inline"><input type="radio" name="optradio">Não, eu assino sozinho pela companhia</label>
+                                            <form action="/corporate/conference-business-partner">
+                                                <label class="radio-inline"><input type="radio" name="alone" value="true">Sim</label>
+                                                <label class="radio-inline"><input type="radio" name="alone" value="">Não, eu assino sozinho pela empresa</label>
+                                                <button type="submit" class="btn btn-success btn-submit">Salvar</button>
+                                            </form>
                                         </div>
 
                                 </form>
