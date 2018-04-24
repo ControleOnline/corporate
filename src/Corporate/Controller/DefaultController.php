@@ -199,6 +199,7 @@ class DefaultController extends \Core\Controller\CompanyController {
         if (!$this->_userModel->loggedIn()) {
             return \Core\Helper\View::redirectToLogin($this->_renderer, $this->getResponse(), $this->getRequest(), $this->redirect());
         } else {
+            $this->_view->setTerminal(true);
             $this->_view->setVariable('forceNotLoggedInLayout', true);
             return $this->_view;
         }
