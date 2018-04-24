@@ -135,10 +135,7 @@ class DefaultController extends \Core\Controller\CompanyController {
                                  */
                                 return $this->redirectTo('/corporate/conference-affiliateds');
                             } else {
-                                $corporatecompany = $companymodel->getLoggedPeopleCompany();
-                                $corporatecompany->setEnabled(true);
-                                $this->getEntityManager()->persist($corporatecompany);
-                                $this->getEntityManager()->flush($corporatecompany);
+                                $companymodel->enablePeople($companymodel->getLoggedPeopleCompany());                                
                                 return $this->redirectTo('/user/profile');
                             }
                         } else {
