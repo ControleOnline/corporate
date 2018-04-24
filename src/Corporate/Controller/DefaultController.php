@@ -34,6 +34,18 @@ class DefaultController extends \Core\Controller\CompanyController {
             ));
 
             /*
+             * 
+
+
+
+
+              echo '<pre>';
+              print_r($data);
+              echo '</pre>';
+              echo '<pre>';
+              print_r($company);
+              echo '</pre>';
+
               $c = Api::nvGet('PessoasLigadasTK', array(
               'documento' => '03449275000103'//$cnpj
               ));
@@ -94,7 +106,7 @@ class DefaultController extends \Core\Controller\CompanyController {
                         /*
                          * @todo Verificar se já respondeu sobre a quantidade de socios
                          */
-                        if (count($data['CPF']) > 1 && $have_business_partner) {
+                        if (count($data['CPF']) > 1 && $have_business_partner && $is_business_partner) {
                             /*
                              * Existem outros socios
                              */
