@@ -135,10 +135,10 @@ class DefaultController extends \Core\Controller\CompanyController {
                                  */
                                 return $this->redirectTo('/corporate/conference-affiliateds');
                             } else {
-                                $company = $companymodel->getLoggedPeopleCompany();
-                                $company->setEnabled(true);
-                                $this->getEntityManager()->persist($company);
-                                $this->getEntityManager()->flush($company);
+                                $corporatecompany = $companymodel->getLoggedPeopleCompany();
+                                $corporatecompany->setEnabled(true);
+                                $this->getEntityManager()->persist($corporatecompany);
+                                $this->getEntityManager()->flush($corporatecompany);
                                 return $this->redirectTo('/user/profile');
                             }
                         } else {
@@ -161,6 +161,7 @@ class DefaultController extends \Core\Controller\CompanyController {
                 echo 'Não encontramos nenhum dado na Nova Vida. O que fazer?';
                 echo '<pre>';
                 print_r($data);
+                print_r($company);
                 echo '</pre>';
                 exit;
             }
