@@ -102,7 +102,7 @@ class DefaultController extends \Core\Controller\CompanyController {
                         /*
                          * @todo Verificar se já respondeu sobre a quantidade de socios
                          */
-                        if (count($data['CPF']) > 1 && $have_business_partner && $is_business_partner) {
+                        if (count($data['CPF']) > 1 && $have_business_partner && $is_business_partner && $data['CARGO_SOCIO'][$_key] == 'SOCIO ADMINISTRADOR') {
                             /*
                              * Existem outros socios
                              */
