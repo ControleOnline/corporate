@@ -32,6 +32,18 @@ class DefaultController extends \Core\Controller\CompanyController {
             $company = Api::nvGet('PessoasEmpresasTk', array(
                         'documento' => $cnpj
             ));
+
+            /*
+              $c = Api::nvGet('PessoasLigadasTK', array(
+              'documento' => '03449275000103'//$cnpj
+              ));
+
+              echo '<pre>';
+              print_r($c);
+              echo '</pre>';
+              die();
+             */
+
             /*
              * Verificar data de fundação
              */
