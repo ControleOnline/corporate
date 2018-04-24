@@ -4,6 +4,7 @@ namespace Corporate\Controller;
 
 use Core\Helper\Api;
 use Core\Model\ErrorModel;
+use Corporate\Model\CorporateModel;
 
 class DefaultController extends \Core\Controller\CompanyController {
     /*
@@ -96,9 +97,13 @@ class DefaultController extends \Core\Controller\CompanyController {
                         }
                     }
                     /*
-                     * @todo Verificar se já temos a procuração
+                     * Verificar se já temos a procuração
                      */
-                    if ($is_business_partner) {
+                    
+                    $corporateModel = new CorporateModel();
+                    $corporateModel->initialize($this->serviceLocator);
+                    $procuration = $corporateModel->getProcuration($companymodel->getLoggedPeopleCompany(), $this->_userModel->getLoggedUserPeople());
+                    if ($is_business_partner ||$procuration) {
                         /*
                          * @todo Verificar se já respondeu sobre a quantidade de socios
                          */
@@ -111,7 +116,7 @@ class DefaultController extends \Core\Controller\CompanyController {
                         /*
                          * @todo Verificar se já temos a procuração
                          */
-                        if ($data['CARGO_SOCIO'][$_key] == 'SOCIO ADMINISTRADOR') {
+                        if ($data['CARGO_SOCIO'][$_key] == 'SOCIO ADMINISTRADOR' || $procuration) {
                             /*
                              * @todo Verificar também se já temos o formulário PPE preenchido
                              */

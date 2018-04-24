@@ -26,4 +26,8 @@ class CorporateModel extends \Core\Model\CompanyModel {
         $this->_em->flush($people_employee);
     }
 
+    public function getProcuration(\Core\Entity\People $company, \Core\Entity\People $people) {
+        return false;
+    }
+
 }
