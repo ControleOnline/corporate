@@ -117,7 +117,7 @@ class DefaultController extends \Core\Controller\CompanyController {
 
                     $corporateModel = new CorporateModel();
                     $corporateModel->initialize($this->serviceLocator);
-                    $procuration = $corporateModel->getProcuration($companymodel->getLoggedPeopleCompany(), $this->_userModel->getLoggedUserPeople());
+                    $procuration = $this->_session->procuration; //$corporateModel->getProcuration($companymodel->getLoggedPeopleCompany(), $this->_userModel->getLoggedUserPeople());
                     if ($is_business_partner || $procuration) {
                         /*
                          * @todo Verificar se já respondeu sobre a quantidade de socios
@@ -127,11 +127,7 @@ class DefaultController extends \Core\Controller\CompanyController {
                              * Existem outros socios
                              */
                             return $this->redirectTo('/corporate/conference-business-partner');
-                        } else
-                        /*
-                         * @todo Verificar se já temos a procuração
-                         */
-                        if ($data['CARGO_SOCIO'][$_key] == 'SOCIO ADMINISTRADOR' || $procuration) {
+                        } else if ($data['CARGO_SOCIO'][$_key] == 'SOCIO ADMINISTRADOR' || $procuration) {
                             /*
                              * @todo Verificar também se já temos o formulário PPE preenchido
                              */
@@ -214,8 +210,19 @@ class DefaultController extends \Core\Controller\CompanyController {
         if (ErrorModel::getErrors()) {
             return $this->_view;
         }
+
+        $params = $this->params()->fromPost();
+
+
+
         if (!$this->_userModel->loggedIn()) {
             return \Core\Helper\View::redirectToLogin($this->_renderer, $this->getResponse(), $this->getRequest(), $this->redirect());
+        } else if ($params && $params['create-procuration']) {
+            /*
+             * Criar procuracao fake
+             */
+            $this->_session->procuration = true;
+            return $this->redirectTo('/corporate/conference');
         } else {
             $this->_view->setTerminal(true);
             $this->_view->setVariable('forceNotLoggedInLayout', true);
