@@ -5,7 +5,7 @@ namespace Corporate\Controller;
 use Core\Helper\Api;
 use Core\Model\ErrorModel;
 use Corporate\Model\CorporateModel;
-use Zend\Session\Container;
+//use Zend\Session\Container;
 
 class DefaultController extends \Core\Controller\CompanyController {
 
@@ -13,12 +13,12 @@ class DefaultController extends \Core\Controller\CompanyController {
      * @var \Zend\Session\Container
      */
     protected $_session;
-
+/*
     public function __construct() {
         $this->_session = new Container('corporate');
         parent::__construct();
     }
-
+*/
     /*
      * @todo Arrumar essa permissão
      */
