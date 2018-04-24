@@ -75,7 +75,11 @@ class DefaultController extends \Core\Controller\CompanyController {
                      * CNAE em blacklist
                      */
                     return $this->redirectTo('/corporate/conference-cnae');
-                } elseif (1 === 'z') {
+                } else
+                /*
+                 * @todo De onde retirar esta informação?
+                 */
+                if (1 === 'z') {
                     /*
                      * Ações judiciais
                      */
@@ -99,11 +103,11 @@ class DefaultController extends \Core\Controller\CompanyController {
                     /*
                      * Verificar se já temos a procuração
                      */
-                    
+
                     $corporateModel = new CorporateModel();
                     $corporateModel->initialize($this->serviceLocator);
                     $procuration = $corporateModel->getProcuration($companymodel->getLoggedPeopleCompany(), $this->_userModel->getLoggedUserPeople());
-                    if ($is_business_partner ||$procuration) {
+                    if ($is_business_partner || $procuration) {
                         /*
                          * @todo Verificar se já respondeu sobre a quantidade de socios
                          */
@@ -135,7 +139,7 @@ class DefaultController extends \Core\Controller\CompanyController {
                                  */
                                 return $this->redirectTo('/corporate/conference-affiliateds');
                             } else {
-                                $companymodel->enablePeople($companymodel->getLoggedPeopleCompany());                                
+                                $companymodel->enablePeople($companymodel->getLoggedPeopleCompany());
                                 return $this->redirectTo('/user/profile');
                             }
                         } else {
