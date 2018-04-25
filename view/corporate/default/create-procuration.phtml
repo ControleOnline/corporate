@@ -21,10 +21,28 @@
                     <div class="app-body">
                         <div class="app-block">                
                             <div class="app-form">
-                                <form action="/corporate/create-procuration" method="POST">
-                                    <input type="hidden" name="create-procuration" value="true">
-                                    <button type="submit" class="btn btn-success btn-submit">Criar procuração</button>
-                                </form>
+
+                                <span>Você possui Procuração para Representar a Empresa?</span>
+                                <div class="radio">
+                                    <label><input id="procuracao-sim" type="radio" name="optradio" onclick="javascript:">Sim</label>
+                                </div>
+                                <div class="radio">
+                                    <label><input id="procuracao-nao" type="radio" name="optradio">Não</label>
+                                </div>
+                                <div id="enviar-procuracao" style="display:none">
+                                    <form action="/corporate/create-procuration" method="POST">
+                                        <input type="hidden" name="create-procuration" value="true">
+                                        <input type="file">
+                                        <button type="submit" class="btn btn-success btn-submit">Assinar procuração</button>
+                                    </form>
+                                </div>                                
+                                <div id="gerar-procuracao" style="display:none">
+                                    <form action="/corporate/create-procuration" method="POST">
+                                        <input type="hidden" name="create-procuration" value="true">
+                                        <embed src="https://sistemas.mre.gov.br/kitweb/datafiles/Frankfurt/pt-br/file/ModelosGeraisProcuraçõesPúblicas.pdf" width="600" height="500" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+                                        <button type="submit" class="btn btn-success btn-submit">Assinar procuração</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                         <div class="app-footer">
@@ -32,6 +50,17 @@
                     </div>
                 </div>
             </div>
-            <?= $this->inlineScript() ?>                       
+            <?= $this->inlineScript() ?>  
+            <script>
+                jQuery('#procuracao-sim').addEventListener("click", function () {
+                    jQuery('#enviar-procuracao').hide();
+                    jQuery('#gerar-procuracao').show();
+                });
+                jQuery('#procuracao-nao').addEventListener("click", function () {
+                    jQuery('#gerar-procuracao').hide();
+                    jQuery('#enviar-procuracao').show();
+                });
+
+            </script>
     </body>
 </html>                                
