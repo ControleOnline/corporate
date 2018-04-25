@@ -30,13 +30,15 @@
                                     <label><input id="procuracao-nao" type="radio" name="optradio">Não</label>
                                 </div>
                                 <div id="enviar-procuracao" style="display:none">
+                                    <span>Neste caso nos envia sua procuração</span>
                                     <form action="/corporate/create-procuration" method="POST">
                                         <input type="hidden" name="create-procuration" value="true">
                                         <input type="file">
-                                        <button type="submit" class="btn btn-success btn-submit">Assinar procuração</button>
+                                        <button type="submit" class="btn btn-success btn-submit">Enviar procuração</button>
                                     </form>
                                 </div>                                
                                 <div id="gerar-procuracao" style="display:none">
+                                    <span>Neste caso vamos criar uma nova procuração</span>
                                     <form action="/corporate/create-procuration" method="POST">
                                         <input type="hidden" name="create-procuration" value="true">
                                         <embed src="https://sistemas.mre.gov.br/kitweb/datafiles/Frankfurt/pt-br/file/ModelosGeraisProcuraçõesPúblicas.pdf" width="100%" height="500" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
@@ -54,11 +56,11 @@
             <script>
                 var sim = document.querySelector("#procuracao-sim");
                 var nao = document.querySelector("#procuracao-nao");
-                sim.addEventListener("click", function () {
+                nao.addEventListener("click", function () {
                     document.querySelector('#enviar-procuracao').style.display = 'none';
                    document.querySelector('#gerar-procuracao').style.display = 'block';
                 });
-                nao.addEventListener("click", function () {
+                sim.addEventListener("click", function () {
                     document.querySelector('#gerar-procuracao').style.display = 'none';
                     document.querySelector('#enviar-procuracao').style.display = 'block';
                 });
