@@ -24,7 +24,7 @@
 
                                 <span>Você possui Procuração para Representar a Empresa?</span>
                                 <div class="radio">
-                                    <label><input id="procuracao-sim" type="radio" name="optradio" onclick="javascript:">Sim</label>
+                                    <label><input id="procuracao-sim" type="radio" name="optradio">Sim</label>
                                 </div>
                                 <div class="radio">
                                     <label><input id="procuracao-nao" type="radio" name="optradio">Não</label>
@@ -52,13 +52,15 @@
             </div>
             <?= $this->inlineScript() ?>  
             <script>
-                jQuery('#procuracao-sim').addEventListener("click", function () {
-                    jQuery('#enviar-procuracao').hide();
-                    jQuery('#gerar-procuracao').show();
+                var sim = document.querySelector("#procuracao-sim");
+                var nao = document.querySelector("#procuracao-nao");
+                sim.addEventListener("click", function () {
+                    document.querySelector('#enviar-procuracao').style.display = 'none';
+                   document.querySelector('#gerar-procuracao').style.display = 'block';
                 });
-                jQuery('#procuracao-nao').addEventListener("click", function () {
-                    jQuery('#gerar-procuracao').hide();
-                    jQuery('#enviar-procuracao').show();
+                nao.addEventListener("click", function () {
+                    document.querySelector('#gerar-procuracao').style.display = 'none';
+                    document.querySelector('#enviar-procuracao').style.display = 'block';
                 });
 
             </script>
