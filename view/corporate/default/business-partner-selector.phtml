@@ -24,8 +24,11 @@
                                 Selecionar quem mais irá assinar em nome da empresa
                             </div>
                             <?php foreach ($this->socios AS $socio) { ?>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" value="<?= $socio ?>"><?= $socio ?></label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="<?= $socio ?>" id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        <?= $socio ?>
+                                    </label>
                                 </div>
                             <?php } ?>
                         </div>
