@@ -245,7 +245,17 @@ class DefaultController extends \Core\Controller\CompanyController {
     }
 
     public function businessPartnerSelectorAction() {
+
+        $companymodel = new \Company\Model\CompanyModel();
+        $companymodel->initialize($this->serviceLocator);
+        $cnpj = $companymodel->getLoggedPeopleCompany()->getDocument()[0]->getDocument();
+
+        $data = Api::nvGet('SociosTK', array(
+                    'documento' => str_pad($cnpj, 14, '0', STR_PAD_LEFT)
+        ));
+
         $this->_view->setTerminal(true);
+        $this->_view->setVariable('socios', $data['NOME']);
         $this->_view->setVariable('forceNotLoggedInLayout', true);
         return $this->_view;
     }
