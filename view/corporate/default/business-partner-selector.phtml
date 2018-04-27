@@ -23,9 +23,11 @@
                             <div class="app-form">
                                 Selecionar quem mais irá assinar em nome da empresa
                             </div>
-                            <pre>
-                                <?php print_r($this->socios); ?>
-                            </pre>
+                            <?php foreach ($this->socios AS $socio) { ?>
+                                <div class="checkbox">
+                                    <label><input type="checkbox" value="<?= $socio ?>"><?= $socio ?></label>
+                                </div>
+                            <?php } ?>
                         </div>
                         <div class="app-footer">
                         </div>
