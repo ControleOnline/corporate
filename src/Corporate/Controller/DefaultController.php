@@ -104,7 +104,7 @@ class DefaultController extends \Core\Controller\CompanyController {
                              */
                             $is_business_partner = true;
                             $_key = $key;
-                        } elseif ($data['CARGO_SOCIO'][$key] == 'SOCIO ADMINISTRADOR') {
+                        } elseif ($data['CARGO_SOCIO'][$key] == 'SOCIO ADMINISTRADOR' || $data['CARGO_SOCIO'][$key] == 'ADMINISTRADOR') {
                             /*
                              * Existe outro sócio que pode assinar
                              */
@@ -122,12 +122,12 @@ class DefaultController extends \Core\Controller\CompanyController {
                         /*
                          * @todo Verificar se já respondeu sobre a quantidade de socios
                          */
-                        if (!$this->_session->conference_business_partner && count($data['CPF']) > 1 && $have_business_partner && $is_business_partner && $data['CARGO_SOCIO'][$_key] == 'SOCIO ADMINISTRADOR') {
+                        if (!$this->_session->conference_business_partner && count($data['CPF']) > 1 && $have_business_partner && $is_business_partner && ($data['CARGO_SOCIO'][$_key] == 'SOCIO ADMINISTRADOR' || $data['CARGO_SOCIO'][$_key] == 'ADMINISTRADOR')) {
                             /*
                              * Existem outros socios
                              */
                             return $this->redirectTo('/corporate/conference-business-partner');
-                        } else if ($data['CARGO_SOCIO'][$_key] == 'SOCIO ADMINISTRADOR' || $procuration) {
+                        } else if (($data['CARGO_SOCIO'][$_key] == 'SOCIO ADMINISTRADOR' || $data['CARGO_SOCIO'][$_key] == 'ADMINISTRADOR') || $procuration) {
                             /*
                              * @todo Verificar também se já temos o formulário PPE preenchido
                              */
